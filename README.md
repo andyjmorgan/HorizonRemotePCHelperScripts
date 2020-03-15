@@ -1,6 +1,10 @@
 ﻿# Horizon Remote PC Helper Scripts
  
  The following repo is a library of scripts to help push, report and identify remote machines with the aim to add the machines to a Horizon Manual pool for remote access.
+ 
+ This script has been primarily written for Windows 10 endpoint targets and requires Powershell Remoting (invoke-command) in order to perform the queries.
+ 
+ This script can do all or some of the required tasks, depending on what you need.
 
 # Deploying the agent to remote machines:
 
