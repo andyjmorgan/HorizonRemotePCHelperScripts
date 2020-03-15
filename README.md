@@ -35,7 +35,7 @@ $ConnectionServerPassword="password"
 # Running the script:
 
 The following lines of the script will push the agent and perform the install, passing the results back into an object you can enumerate later. The $computers array, can be retrieved from any source you like, such as an AD query, this array will be used to deploy the agent to the listed machines:
-
+```PowerShell
 $computers=@("m10d1","m10d2")
 
 $results =@()
@@ -49,29 +49,22 @@ foreach($computer in $computers){
         Write-Warning "failed to copy file to $computer"
     }
 }
+```
 
 # Viewing the results:
 
 Upon completion, you can review the $results object, it will appear similar to below:
-
+```PowerShell
 InstallResult    : True
-
 release          : 1903
-
 FailureReason    :
-
 OperatingSystem  : Microsoft Windows 10 Enterprise
-
 ReturnCode       : 3010
-
 edition          : Enterprise
-
 VersionInstalled : 7.11.0
-
 PrimaryUser      : M10D1\Administrator
-
 PSComputerName   : m10d1
-
+```
 
 In the above example, the deployment was successful, the primary user is m10d1\Administrator and the machine requires a restart (3010 exit code).
 
@@ -83,59 +76,60 @@ $results | ? {$_.installresult} | select pscomputername, primaryuser | export-cs
 
 If you simply want to get the primary user, using the $computers array above, you can use the following snippet in the script:
 
-
+```powershell
 $remoteUsersResults=@()
 foreach($computer in $computers){
     $remoteUser = Get-ComputerPrimaryUser -machineName $computer -credentials $PowerShellRemotingCreds
     $remoteUsersResults += $remoteUser
 }
+```
 
 this returns: 
 
+```powershell
 primaryuser         PSComputerName RunspaceId
-
 -----------         -------------- ----------
-
 M10D1\Administrator m10d1          ce72d988-cf08-4fcf-b294-3c3e43ca3ad6
+```
 
 
 # Just setting the power policy: (windows 10 only)
 
 If you simply want to set the power policy, using the $computers array above, you can use the following snippet in the script:
 
+```powershell
 $powerplanResults =@()
 foreach($computer in $computers){
     $powerplan = Set-ComputerPowerPolicy -machineName $computer -credentials $PowerShellRemotingCreds
     $powerplanResults += $powerplan
 }
+```
 
 this returns:
 
+```powershell
 OldPlan        : Ultimate Performance
-
 NewPlan        : Ultimate Performance
-
 PSComputerName : m10d1
-
 RunspaceId     : ca19cfb5-a1b3-4df9-989b-b98fa6d4711d
+```
 
 # Just Getting the remote machines operating system details:
 
 If you simply want to get the operating system details, using the $computers array above, you can use the following snippet in the script:
 
+```powershell
 $osResults =@()
 foreach($computer in $computers){
     $detail = Get-ComputerDetails -machineName $computer -credentials $PowerShellRemotingCreds
     $osResults += $detail
 }
+```
 
-
+```powershell
 edition         : Enterprise
-
 release         : 1903
-
 OperatingSystem : Microsoft Windows 10 Enterprise
-
 PSComputerName  : m10d1
-
 RunspaceId      : 2e924fe8-a7b6-4547-ba66-19cbb09619c7
+```
