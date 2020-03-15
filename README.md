@@ -26,11 +26,14 @@ This script will do the following:
  
 the following variables are required in order to use the script for deployment, the names are self explanatory and please change them before attempting to use the tool:
 
+
+```powershell
 $filePath = "C:\Users\andy\source\repos\horizonpush\VMware-Horizon-Agent-x86_64-7.11.0-15238678.exe"
 $PowerShellRemotingCreds = get-credential -UserName "lab\administrator" -Message "Enter psremoting credentials"
 $ConnectionServerName="connectionserver.lab.local"
 $ConnectionServerUserName="domain\username"
 $ConnectionServerPassword="password"
+```
 
 # Running the script:
 
@@ -125,6 +128,8 @@ foreach($computer in $computers){
     $osResults += $detail
 }
 ```
+
+This Returns:
 
 ```powershell
 edition         : Enterprise
